@@ -1,22 +1,43 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {useState} from 'react';
+import Navbar from './components/Navbar';
+
+export const pageType = {
+  PTO: 1,
+  Skills: 2,
+  Certifications: 3
+}
 
 function App() {
+  const[counter, setCounter] = useState(0);
+   const [currentPage, setCurrentPage] = useState(pageType.Home)
+
+
+const changePage = (PageTypeNumber) => {
+  setCurrentPage(Number(PageTypeNumber));
+}
+
+const renderPage = () => {
+  //switch on the value of our current page
+  switch(currentPage){
+    case pageType.Home:return <p> this is my pto</p>
+    case pageType.Skills: return <p>this skills</p>
+    case pageType.Certifications: return <p>this Certifications</p>
+    default: return <p> this is my homepage</p>
+  }
+}
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Navbar changePage={(e) => changePage(e)} />
+       <p> -------</p>
+       {renderPage()}
+       <p>------</p>
+       <button onClick={()=> setCounter(counter + 1)}> plus</button>
+       <h1>{counter}</h1>
+       <button onClick={()=> setCounter(counter - 1)}>minus</button>
       </header>
     </div>
   );
